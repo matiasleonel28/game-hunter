@@ -220,3 +220,67 @@ button:hover {
   box-shadow: 0 4px 0 #00235e; /* Efecto 3D */
 }
 .btn-ps:hover { background: #004ab8; transform: translateY(2px); box-shadow: 0 2px 0 #00235e; }
+
+/* ... CSS anterior ... */
+
+/* Badge de Descuento (Nuevo) */
+.discount-badge {
+  position: absolute;
+  top: 12px; right: 12px; /* Arriba a la derecha */
+  background: #4c6b22; /* Verde Steam */
+  color: #a4d007; /* Verde Neón Texto */
+  padding: 6px 10px;
+  font-size: 1rem;
+  font-weight: 900;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+  z-index: 2;
+  border: 1px solid #a4d007;
+}
+
+/* Contenedor de Precios y SteamDB */
+.price-info {
+  display: flex;
+  justify-content: space-between; /* SteamDB a la izq, Precio a la der */
+  align-items: flex-end;
+  margin-bottom: 15px;
+}
+
+/* Link a SteamDB */
+.steamdb-link {
+  font-size: 0.75rem;
+  color: #6a7988;
+  text-decoration: none;
+  border: 1px solid #3c4652;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  background: #171d25;
+}
+.steamdb-link:hover {
+  color: #fff;
+  border-color: #66c0f4;
+  background: #212c3d;
+}
+
+/* Bloque de precios */
+.steam-price-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* Precio Original Tachado */
+.original-price {
+  font-size: 0.85rem;
+  color: #727e8a;
+  text-decoration: line-through;
+  margin-bottom: -2px;
+}
+
+.final-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+/* ... resto del CSS (currency, amount, free) ... */
