@@ -1,65 +1,222 @@
-#root {
-  max-width: 1200px; margin: 0 auto; padding: 2rem;
-  text-align: center; font-family: 'Segoe UI', system-ui, sans-serif;
-  background-color: #1b2838; /* Color de fondo estilo Steam */
-  color: #c7d5e0; min-height: 100vh;
+/* 1. RESET GLOBAL Y FONDO */
+:root {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
 }
 
-h1 { color: #66c0f4; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px; }
+body {
+  margin: 0;
+  padding: 0;
+  /* Un fondo un poco más azulado, estilo cliente de Steam */
+  background: radial-gradient(circle at top center, #1b2838 0%, #0f171e 100%);
+  color: #ecf0f1;
+  min-height: 100vh;
+  width: 100%;
+}
 
-.search-box { display: flex; justify-content: center; gap: 10px; margin-bottom: 3rem; }
+/* 2. CONTENEDOR PRINCIPAL (Centrado arriba) */
+#root {
+  width: 100%;
+  display: block; /* Asegura que no interfiera el index.css viejo */
+}
+
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto; /* Centrado horizontal */
+  padding: 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Todo centrado al medio */
+  justify-content: flex-start; /* Todo pegado arriba */
+}
+
+/* 3. HEADER Y TÍTULO */
+header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.main-title {
+  font-size: 4rem; /* Más impactante */
+  font-weight: 900;
+  letter-spacing: -3px;
+  margin: 0;
+  line-height: 1;
+  text-transform: uppercase;
+  
+  /* Gradiente más agresivo "Gamer" */
+  background: linear-gradient(to right, #ffffff 20%, #3b82f6 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  
+  filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.4));
+}
+
+.subtitle {
+  color: #94a3b8;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  font-weight: 300;
+}
+
+/* 4. BÚSQUEDA */
+.search-box {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 4rem;
+  width: 100%;
+}
 
 input {
-  padding: 12px; border-radius: 4px; border: none;
-  background: #2a475e; color: white; width: 300px; font-size: 16px;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+  padding: 14px 24px;
+  border-radius: 12px;
+  border: 2px solid #1e293b;
+  background: #0f171e; /* Input más oscuro */
+  color: white;
+  width: 100%;
+  max-width: 450px;
+  font-size: 18px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
 }
-input:focus { outline: 2px solid #66c0f4; }
+input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3), inset 0 2px 5px rgba(0,0,0,0.5);
+  background: #1e293b;
+}
 
 button {
-  padding: 12px 24px; border-radius: 4px; border: none;
-  background: linear-gradient(90deg, #06BFFF 0%, #2D73FF 100%);
-  color: white; font-weight: bold; cursor: pointer;
+  padding: 14px 35px;
+  border-radius: 12px;
+  border: none;
+  /* Gradiente azul Steam */
+  background: linear-gradient(180deg, #47bfff 0%, #1a44c2 100%);
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
   transition: all 0.2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
-button:hover { transform: scale(1.05); filter: brightness(1.2); }
-button:disabled { background: #444; cursor: wait; transform: none; }
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(26, 68, 194, 0.5);
+  filter: brightness(1.1);
+}
 
-.btn-sort { background: #4c6b22; /* Verde oscuro */ }
-.btn-sort:hover { background: #6a9630; }
-
+/* 5. GRILLA DE RESULTADOS */
 .results-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px;
+  display: grid;
+  /* Tarjetas un poco más anchas para que entre mejor la imagen */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 30px;
+  width: 100%;
 }
 
-.card-link { text-decoration: none; color: inherit; display: block; }
-
+/* 6. TARJETAS (Aquí están los arreglos clave) */
 .card {
-  background: #16202d; padding: 10px; border-radius: 5px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3); position: relative;
-  transition: transform 0.2s, box-shadow 0.2s; height: 100%;
-  display: flex; flex-direction: column; justify-content: space-between;
+  background: #16202d; /* Color de tarjeta estilo Steam */
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  border: 1px solid #1e293b;
+  position: relative;
 }
 
-.card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.5); }
-
-.card img { width: 100%; border-radius: 3px; margin-bottom: 10px; }
-
-.card h3 { font-size: 1rem; margin: 10px 0; color: #fff; text-align: left; }
-
-/* Estilos de Precios */
-.price-container {
-  display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin-top: auto;
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  border-color: #47bfff; /* Borde azul al pasar el mouse */
 }
 
-.price { color: #a4d007; font-weight: bold; font-size: 1.1rem; } /* Verde Steam */
-.free { color: #fff; font-weight: bold; }
-.old-price { color: #7a8b9d; text-decoration: line-through; font-size: 0.9rem; }
+.img-link { display: block; position: relative; overflow: hidden; }
 
-/* Badge de Descuento */
-.discount-badge {
-  position: absolute; top: -5px; right: -5px;
-  background-color: #4c6b22; color: #a4d007;
-  padding: 5px 8px; font-weight: bold; border-radius: 4px;
-  font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+/* --- ARREGLO IMAGEN --- */
+.card img {
+  width: 100%;
+  height: 135px; /* Altura reducida para que sea más panorámica */
+  object-fit: cover; /* Se adapta sin estirarse */
+  transition: transform 0.4s;
+  border-bottom: 4px solid #000; /* Línea negra debajo de la imagen */
 }
+.card:hover img { transform: scale(1.1) rotate(1deg); /* Efecto zoom sutil */ }
+
+/* --- ARREGLO TAG STEAM --- */
+.store-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: #2a475e; /* Azul sólido clásico de Steam */
+  color: #ffffff; /* Texto blanco puro */
+  padding: 6px 12px;
+  font-size: 0.8rem; font-weight: 800; letter-spacing: 1px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5); /* Sombra para que resalte */
+  z-index: 2;
+}
+
+.card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+
+.card h3 {
+  font-size: 1.25rem;
+  margin: 0 0 15px 0;
+  text-align: left;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.3;
+  /* Límite de 2 líneas para títulos largos */
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.steam-price {
+  display: flex; justify-content: flex-end; align-items: baseline;
+  margin-bottom: 20px; gap: 5px;
+}
+.currency { font-size: 1rem; color: #8a9d9e; font-weight: 600; }
+.amount { font-size: 1.8rem; color: #66c0f4; font-weight: 800; }
+.free { color: #a4d007; font-weight: bold; font-size: 1.4rem; }
+
+.separator { height: 2px; background: #1e293b; margin: 0 0 20px 0; }
+
+/* 7. BOTONES DE CONSOLAS */
+.console-links p {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin: 0 0 12px 0;
+  text-align: center;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.buttons-row { display: flex; gap: 12px; }
+
+.btn-console {
+  flex: 1;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 12px 0;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+
+/* Xbox (Verde más intenso) */
+.btn-xbox {
+  background: #107C10; color: white;
+  box-shadow: 0 4px 0 #0a520a; /* Efecto 3D */
+}
+.btn-xbox:hover { background: #159915; transform: translateY(2px); box-shadow: 0 2px 0 #0a520a; }
+
+/* PlayStation (Azul Sony) */
+.btn-ps {
+  background: #003791; color: white;
+  box-shadow: 0 4px 0 #00235e; /* Efecto 3D */
+}
+.btn-ps:hover { background: #004ab8; transform: translateY(2px); box-shadow: 0 2px 0 #00235e; }

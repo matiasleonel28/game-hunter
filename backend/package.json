@@ -12,8 +12,10 @@
   "type": "commonjs",
   "dependencies": {
     "axios": "^1.13.4",
+    "cheerio": "^1.2.0",
     "cors": "^2.8.6",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "nintendo-switch-eshop": "^9.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"
