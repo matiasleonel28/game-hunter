@@ -11,7 +11,7 @@ function App() {
     setCargando(true);
     setJuegos([]);
     try {
-      const respuesta = await fetch(`http://localhost:3001/search?q=${busqueda}`)
+      const respuesta = await fetch(`https://gamehunter-backend.onrender.com/search?q=${busqueda}`)
       const datos = await respuesta.json()
       setJuegos(datos)
     } catch (error) {
