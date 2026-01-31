@@ -8,7 +8,6 @@ function App() {
 
   const buscarJuegos = async () => {
     if (!busqueda) return; 
-
     setCargando(true);
     try {
       const respuesta = await fetch(`http://localhost:3001/search?q=${busqueda}`)
@@ -22,19 +21,20 @@ function App() {
       setCargando(false);
     }
   }
-  // Función para ordenar los juegos (de menor a mayor precio)
+
   const ordenarPorPrecio = () => {
-    // 1. Creamos una copia de la lista [...juegos] para no romper el estado original
     const juegosOrdenados = [...juegos].sort((a, b) => {
-      // Obtenemos el precio final (o 0 si es gratis/no tiene precio)
       const precioA = a.price ? a.price.final : 0;
       const precioB = b.price ? b.price.final : 0;
-      
-      return precioA - precioB; // Si da negativo, A va antes que B
+      return precioA - precioB;
     });
-
-    // 2. Actualizamos la pantalla con la lista ordenada
     setJuegos(juegosOrdenados);
+  }
+
+  // Helper para calcular porcentaje de descuento
+  const getDescuento = (inicial, final) => {
+    if (!inicial || !final || inicial === final) return null;
+    return Math.round((1 - final / inicial) * 100);
   }
 
   return (
@@ -52,38 +52,53 @@ function App() {
         <button onClick={buscarJuegos} disabled={cargando}>
           {cargando ? "Buscando..." : "Buscar"}
         </button>
-        
-        {/* NUEVO BOTÓN: Solo se muestra si hay juegos en la lista */}
         {juegos.length > 0 && (
-          <button onClick={ordenarPorPrecio} style={{ marginLeft: '10px', backgroundColor: '#4caf50' }}>
+          <button onClick={ordenarPorPrecio} className="btn-sort">
             Ordenar 💲
           </button>
         )}
       </div>
 
       <div className="results-grid">
-        {juegos.map((juego) => (
-          // NUEVO: Envolvemos la tarjeta en un enlace <a>
-          // target="_blank" hace que se abra en una pestaña nueva
-          <a 
-            key={juego.id} 
-            href={`https://store.steampowered.com/app/${juego.id}`} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="card-link"
-          >
-            <div className="card">
-              <img src={juego.tiny_image} alt={juego.name} />
-              <h3>{juego.name}</h3>
-              <p className="price">
-                {/* NUEVO: Agregamos "USD" al final */}
-                {juego.price 
-                  ? `$${(juego.price.final / 100).toFixed(2)} USD` 
-                  : "Gratis / Sin precio"}
-              </p>
-            </div>
-          </a>
-        ))}
+        {juegos.map((juego) => {
+          const discount = juego.price ? getDescuento(juego.price.initial, juego.price.final) : null;
+          
+          return (
+            <a 
+              key={juego.id} 
+              href={`https://store.steampowered.com/app/${juego.id}`} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="card-link"
+            >
+              <div className="card">
+                {/* Badge de descuento flotante */}
+                {discount && <span className="discount-badge">-{discount}%</span>}
+                
+                <img src={juego.tiny_image} alt={juego.name} />
+                <h3>{juego.name}</h3>
+                
+                <div className="price-container">
+                  {juego.price ? (
+                    <>
+                      {/* Si hay descuento, mostramos el precio viejo tachado */}
+                      {discount && (
+                        <span className="old-price">
+                          ${(juego.price.initial / 100).toFixed(2)}
+                        </span>
+                      )}
+                      <span className="price">
+                        ${(juego.price.final / 100).toFixed(2)} USD
+                      </span>
+                    </>
+                  ) : (
+                    <span className="free">Gratis / Sin precio</span>
+                  )}
+                </div>
+              </div>
+            </a>
+          )
+        })}
       </div>
     </div>
   )
